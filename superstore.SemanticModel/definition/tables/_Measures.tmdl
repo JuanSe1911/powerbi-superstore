@@ -1,0 +1,63 @@
+table _Measures
+	lineageTag: 4c251064-c658-4974-a9cd-4c24df45efc3
+
+	measure 'Total Sales' = SUM(FactSales[Sales])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a5ad3d36-2172-447e-a740-8ccfbd605983
+
+	measure 'Total Profit' = SUM(FactSales[Profit])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: b909191c-a343-4f1d-badf-d4e5a4f90cf4
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: dded83fa-b023-45f5-9393-c0fc6cd78c92
+
+	measure Orders = DISTINCTCOUNT(FactSales[Order ID])
+		formatString: 0
+		lineageTag: 4d2f40d7-f7ee-4ed1-b997-c713cd754151
+
+	measure 'Avg Order Value' = DIVIDE([Total Sales], [Orders])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a031b161-494b-4e8b-94aa-38be22bbc558
+
+	measure 'Sales PY' = ```
+			
+			    CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date]))
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a99fb4e0-4574-4865-919a-615116b1037e
+
+	measure 'Sales YoY %' = ```
+			
+			    DIVIDE([Total Sales] - [Sales PY], [Sales PY])
+			```
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: bc278f4b-8c1c-4a9f-ab3f-87478e5cee44
+
+	measure 'Avg Shipping Days' = AVERAGE(FactSales[ShippingDays])
+		formatString: 0.0
+		lineageTag: 21dfd6ea-0991-42da-9790-6990791a3675
+
+	measure 'Orders by Ship Date' = ```
+			
+			    CALCULATE(
+			        [Orders],
+			        USERELATIONSHIP(DimDate[Date], FactSales[Ship Date])
+			    )
+			```
+		formatString: 0
+		lineageTag: 45812ae8-a186-4b91-9e48-00bbdbf0c2db
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

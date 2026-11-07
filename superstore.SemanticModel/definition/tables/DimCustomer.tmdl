@@ -1,0 +1,41 @@
+table DimCustomer
+	lineageTag: a2c5d437-8372-4abd-bc14-a6608675d92a
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: adbf1a3f-4cd9-4c8a-a22b-f3f032db2390
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 1f9e4f31-4118-4121-9668-ba5c79969348
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: cdc4910d-4b99-4c73-a875-e1a155167f13
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCustomer = m
+		mode: import
+		source =
+				let
+				    Source = Superstore_Raw,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Customer ID", "Customer Name", "Segment"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

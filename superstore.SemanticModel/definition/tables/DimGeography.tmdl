@@ -1,0 +1,50 @@
+table DimGeography
+	lineageTag: ff7bc511-1141-4cbd-b5fe-1c4756c1a6b9
+
+	column GeoKey
+		dataType: string
+		lineageTag: 1f3206fc-68a3-4249-ae63-bd6d63f08279
+		summarizeBy: none
+		sourceColumn: GeoKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 058bc9d6-f9b8-41ba-9d70-3cdb7d00a770
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 9509dcf7-1657-49bd-b747-cb38ddbe5676
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: c885a375-ba7c-4bf0-8a00-15782e84e089
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimGeography = m
+		mode: import
+		source =
+				let
+				    Source = Superstore_Raw,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"City", "State", "GeoKey", "Region"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Other Columns",{"GeoKey", "City", "State", "Region"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Reordered Columns", {"GeoKey"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

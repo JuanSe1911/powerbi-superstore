@@ -1,0 +1,49 @@
+table DimProduct
+	lineageTag: 11617af8-6886-4cbc-8ed1-ad7a1f62c200
+
+	column 'Product ID'
+		dataType: string
+		lineageTag: 9659debb-363f-42e5-ac59-ffbcb45ee043
+		summarizeBy: none
+		sourceColumn: Product ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 6d45d2db-1780-4e22-bb7c-56714983c258
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub-Category
+		dataType: string
+		lineageTag: dcb457d0-a9f6-4ba1-99b8-eb33ba0388d7
+		summarizeBy: none
+		sourceColumn: Sub-Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: fbbbff80-9110-4c09-bcde-d47fecfd5dab
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimProduct = m
+		mode: import
+		source =
+				let
+				    Source = Superstore_Raw,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Product ID", "Category", "Sub-Category", "Product Name"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"Product ID"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,24 @@
+expression Superstore_Raw =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\juans\OneDrive\Documentos\00 MyDocs\Laboral\Proj\PowerBI\powerbi-superstore\data\Sample - Superstore.csv"),[Delimiter=",", Columns=21, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Profit", type number}, {"Row ID", type text}, {"Order ID", type text}, {"Order Date", type date}, {"Ship Date", type date}, {"Ship Mode", type text}, {"Customer ID", type text}, {"Customer Name", type text}, {"Segment", type text}, {"Country", type text}, {"City", type text}, {"State", type text}, {"Postal Code", type text}, {"Region", type text}, {"Product ID", type text}, {"Category", type text}, {"Sub-Category", type text}, {"Product Name", type text}, {"Sales", type number}, {"Quantity", Int64.Type}, {"Discount", type number}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"Order ID", "Order Date", "Ship Date", "Ship Mode", "Customer ID", "Customer Name", "Segment", "Country", "City", "State", "Postal Code", "Region", "Product ID", "Category", "Sub-Category", "Product Name", "Sales", "Quantity", "Discount", "Profit"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Removed Duplicates",{{"Order ID", Text.Trim, type text}, {"Ship Mode", Text.Trim, type text}, {"Customer ID", Text.Trim, type text}, {"Customer Name", Text.Trim, type text}, {"Segment", Text.Trim, type text}, {"Country", Text.Trim, type text}, {"City", Text.Trim, type text}, {"State", Text.Trim, type text}, {"Postal Code", Text.Trim, type text}, {"Region", Text.Trim, type text}, {"Product ID", Text.Trim, type text}, {"Category", Text.Trim, type text}, {"Sub-Category", Text.Trim, type text}, {"Product Name", Text.Trim, type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Trimmed Text",{"Country", "Row ID"}),
+		    #"Added Custom" = Table.AddColumn(#"Removed Columns", "DiasEnvio", each Duration.Days([Ship Date]-[Order Date])),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"DiasEnvio", Int64.Type}}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type1",{"Order ID", "Order Date", "Ship Date", "DiasEnvio", "Ship Mode", "Customer ID", "Customer Name", "Segment", "City", "State", "Postal Code", "Region", "Product ID", "Category", "Sub-Category", "Product Name", "Sales", "Quantity", "Discount", "Profit"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"DiasEnvio", "ShippingDays"}}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Renamed Columns",{"Postal Code"}),
+		    #"Added Custom1" = Table.AddColumn(#"Removed Columns1", "GeoKey", each [City] & "|" & [State]),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"GeoKey", type text}}),
+		    #"Reordered Columns1" = Table.ReorderColumns(#"Changed Type2",{"Order ID", "Order Date", "Ship Date", "ShippingDays", "Ship Mode", "Customer ID", "Customer Name", "Segment", "City", "State", "GeoKey", "Region", "Product ID", "Category", "Sub-Category", "Product Name", "Sales", "Quantity", "Discount", "Profit"})
+		in
+		    #"Reordered Columns1"
+	lineageTag: 56949962-a2e0-416b-8c25-cee3af9fdb32
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

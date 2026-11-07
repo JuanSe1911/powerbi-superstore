@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 91.942092747384592,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 50,
+            "y": 336.2309733883593
+          },
+          "nodeIndex": "DimCustomer",
+          "nodeLineageTag": "a2c5d437-8372-4abd-bc14-a6608675d92a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 618.35258353480856,
+            "y": 519.16007723655468
+          },
+          "nodeIndex": "DimGeography",
+          "nodeLineageTag": "ff7bc511-1141-4cbd-b5fe-1c4756c1a6b9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "DimProduct",
+          "nodeLineageTag": "11617af8-6886-4cbc-8ed1-ad7a1f62c200",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 334.21180574558332,
+            "y": 176.20831321835362
+          },
+          "nodeIndex": "FactSales",
+          "nodeLineageTag": "895321e4-bd16-477d-9ac0-e6509ce738be",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 656.44780982265036,
+            "y": 0
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "982b73ed-5576-4fb5-901f-e35f8a530c1e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 940.44780982265036,
+            "y": 295.58003861827734
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "4c251064-c658-4974-a9cd-4c24df45efc3",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.553182037699813,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

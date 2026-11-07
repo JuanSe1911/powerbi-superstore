@@ -1,0 +1,13 @@
+// Welcome to DAX query view! Learn more about DAX queries at https://aka.ms/dax-queries.
+// Right-click on tables, columns, or measures in the data pane to access quick queries, or ask Copilot for help writing DAX.
+
+// Select "Run" to try this sample DAX query.
+EVALUATE
+ROW(
+    "Total Sales", [Total Sales],
+    "Total Profit", [Total Profit],
+    "Profit Margin %", [Profit Margin %],
+    "Orders", [Orders],
+    "Avg Order Value", [Avg Order Value],
+    "Avg Shipping Days", [Avg Shipping Days]
+)

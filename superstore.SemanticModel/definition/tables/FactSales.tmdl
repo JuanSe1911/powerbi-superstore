@@ -1,0 +1,126 @@
+table FactSales
+	lineageTag: 895321e4-bd16-477d-9ac0-e6509ce738be
+
+	column 'Order ID'
+		dataType: string
+		lineageTag: b3263e8b-6525-4cb2-aab0-50dba867b56d
+		summarizeBy: none
+		sourceColumn: Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ef82f424-2c42-41be-87a9-f074a9056155
+		summarizeBy: none
+		sourceColumn: Order Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Ship Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 673e65ca-b4f6-4bbe-a78d-dbdd40efc035
+		summarizeBy: none
+		sourceColumn: Ship Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ShippingDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 7577c0f5-9c97-42fc-a086-c07c4b9ec0a4
+		summarizeBy: sum
+		sourceColumn: ShippingDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ship Mode'
+		dataType: string
+		lineageTag: 3d268621-572c-4cf0-a52e-2c9dc3503d31
+		summarizeBy: none
+		sourceColumn: Ship Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: 48127366-c607-4115-ad2a-d3418bc5a17c
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeoKey
+		dataType: string
+		lineageTag: d170b466-cabb-48f2-936a-a26acb89b9cf
+		summarizeBy: none
+		sourceColumn: GeoKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product ID'
+		dataType: string
+		lineageTag: b6e01e21-f351-4650-894f-fdad16c8c039
+		summarizeBy: none
+		sourceColumn: Product ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		lineageTag: d045a84f-3b58-486f-830c-e1d9ef08b240
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c5df843-82c4-4e4a-8458-47df2a8a9165
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		lineageTag: bb07454c-c227-443c-aebc-7ba97b99ce1e
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Profit
+		dataType: double
+		lineageTag: 98ffc5e5-c166-47ca-8e9a-38a7937ba438
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactSales = m
+		mode: import
+		source =
+				let
+				    Source = Superstore_Raw,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Order ID", "Order Date", "Ship Date", "ShippingDays", "Ship Mode", "Customer ID", "GeoKey", "Product ID", "Sales", "Quantity", "Discount", "Profit"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

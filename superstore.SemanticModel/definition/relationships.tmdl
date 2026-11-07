@@ -1,0 +1,21 @@
+relationship AutoDetected_bcf5d36d-eb93-4454-bc6e-7c4de492a0bd
+	fromColumn: FactSales.'Customer ID'
+	toColumn: DimCustomer.'Customer ID'
+
+relationship AutoDetected_26720538-341c-4412-8ce6-2a3d0a8276d0
+	fromColumn: FactSales.'Product ID'
+	toColumn: DimProduct.'Product ID'
+
+relationship AutoDetected_2e735f3c-3bdb-4f9d-8bf7-83cb6a231335
+	fromColumn: FactSales.GeoKey
+	toColumn: DimGeography.GeoKey
+
+relationship 90e62b49-bbf7-0d6e-325d-b3cea3a86038
+	fromColumn: FactSales.'Order Date'
+	toColumn: DimDate.Date
+
+relationship 0c2e8460-0c56-aee6-6ba8-cccd91867b2c
+	isActive: false
+	fromColumn: FactSales.'Ship Date'
+	toColumn: DimDate.Date
+

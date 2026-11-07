@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "544759afd722ebbe381b",
+  "displayName": "Operations",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "pageBinding": {
+    "name": "20f96eb4b36150534142",
+    "type": "Default",
+    "parameters": []
+  }
+}
